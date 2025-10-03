@@ -1,18 +1,15 @@
 package br.com.wellington.infraestructure.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
 @Entity
 @Table(name = "enderecos")
+@Builder
 public class Endereco {
 
     @Id
@@ -25,8 +22,6 @@ public class Endereco {
     private Long numero;
     @Column(name = "complemento", length = 10)
     private String complemento;
-    @Column(name = "bairro")
-    private String bairro;
     @Column(name = "cidade")
     private String cidade;
     @Column(name = "estado", length = 2)
