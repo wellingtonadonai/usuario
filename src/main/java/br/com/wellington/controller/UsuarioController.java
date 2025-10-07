@@ -24,7 +24,6 @@ public class UsuarioController {
     public ResponseEntity <UsuarioDto> salvarUsuario(@RequestBody UsuarioDto usuarioDto){
         return ResponseEntity.ok(usuarioService.salvarUsuario(usuarioDto));
 
-
     }
     @PostMapping("/login")
     public String login(@RequestBody UsuarioDto usuarioDto){

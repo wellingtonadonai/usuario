@@ -38,7 +38,7 @@ public class UsuarioService {
 
             }
 
-        }
+    }
     public boolean verificaEmailExistente(String email){
         return usuarioRepository.existsByEmail(email);
     }
@@ -55,7 +55,6 @@ public class UsuarioService {
         Usuario usuarioEntity = usuarioRepository.findByEmail(email).orElseThrow(()->
                 new ResourceNotFoundException("email não localizado"));
         Usuario usuario = usuarioConverter.updateUsuario(dto, usuarioEntity);
-
         return usuarioConverter.paraUsuarioDto(usuarioRepository.save(usuario));
 
     }
