@@ -11,6 +11,7 @@ import lombok.*;
 @Table(name = "telefones")
 @Builder
 public class Telefone {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
