@@ -83,5 +83,15 @@ public class UsuarioConverter {
     public List<TelefoneDto> paraListaTelefoneDto(List<Telefone> telefone){
         return telefone.stream().map(this::paraTelefoneDto).toList();
     }
+    public Usuario updateUsuario(UsuarioDto usuarioDto, Usuario entity){
+        return Usuario.builder()
+                .nome(usuarioDto.getNome()!= null ? usuarioDto.getNome() : entity.getNome())
+                .id(entity.getId())
+                .senha(usuarioDto.getSenha() != null ? usuarioDto.getSenha() : entity.getSenha())
+                .email(usuarioDto.getEmail() != null ? usuarioDto.getEmail() : entity.getEmail())
+                .enderecos(entity.getEnderecos())
+                .telefones(entity.getTelefones())
+                .build();
+    }
 
 }

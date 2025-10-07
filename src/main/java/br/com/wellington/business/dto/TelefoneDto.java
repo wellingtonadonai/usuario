@@ -11,5 +11,6 @@ import lombok.*;
 public class TelefoneDto {
 
     private String numero;
+
     private String ddd;
 }
