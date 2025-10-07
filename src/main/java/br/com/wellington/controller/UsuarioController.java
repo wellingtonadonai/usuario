@@ -15,6 +15,7 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
     public ResponseEntity <UsuarioDto> salvarUsuario(@RequestBody UsuarioDto usuarioDto){
+
         return ResponseEntity.ok(usuarioService.salvarUsuario(usuarioDto));
 
 
