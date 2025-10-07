@@ -6,6 +6,7 @@ import br.com.wellington.infraestructure.entity.Usuario;
 import br.com.wellington.infraestructure.exception.ConflitException;
 import br.com.wellington.infraestructure.exception.ResourceNotFoundException;
 import br.com.wellington.infraestructure.repository.UsuarioRepository;
+import br.com.wellington.infraestructure.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final UsuarioConverter usuarioConverter;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
     public UsuarioDto salvarUsuario(UsuarioDto usuarioDto){
         emailExistente (usuarioDto.getEmail());
@@ -46,6 +48,16 @@ public class UsuarioService {
     }
     public void deletaUsuarioPorEmail(String email){
         usuarioRepository.deleteByEmail(email);
+    }
+    public UsuarioDto atualizaDadosUsuario(String token, UsuarioDto dto){
+        String email = jwtUtil.extractUsername(token.substring(7));
+        dto.setSenha(dto.getSenha() != null ? passwordEncoder.encode(dto.getSenha()) : null );
+        Usuario usuarioEntity = usuarioRepository.findByEmail(email).orElseThrow(()->
+                new ResourceNotFoundException("email não localizado"));
+        Usuario usuario = usuarioConverter.updateUsuario(dto, usuarioEntity);
+
+        return usuarioConverter.paraUsuarioDto(usuarioRepository.save(usuario));
+
     }
 
 }
