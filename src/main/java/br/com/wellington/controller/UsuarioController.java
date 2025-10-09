@@ -1,6 +1,8 @@
 package br.com.wellington.controller;
 
 import br.com.wellington.business.UsuarioService;
+import br.com.wellington.business.dto.EnderecoDto;
+import br.com.wellington.business.dto.TelefoneDto;
 import br.com.wellington.business.dto.UsuarioDto;
 import br.com.wellington.infraestructure.entity.Usuario;
 import br.com.wellington.infraestructure.security.JwtUtil;
@@ -23,6 +25,7 @@ public class UsuarioController {
     @PostMapping
     public ResponseEntity <UsuarioDto> salvarUsuario(@RequestBody UsuarioDto usuarioDto){
         return ResponseEntity.ok(usuarioService.salvarUsuario(usuarioDto));
+
     }
     @PostMapping("/login")
     public String login(@RequestBody UsuarioDto usuarioDto){
@@ -34,8 +37,7 @@ public class UsuarioController {
 
     }
     @GetMapping
-    public ResponseEntity<Usuario> buscaUsuarioPorEmail(@RequestParam("email")String email){
-
+    public ResponseEntity<UsuarioDto> buscaUsuarioPorEmail(@RequestParam("email")String email){
         return ResponseEntity.ok( usuarioService.buscaUsuarioPorEmail(email));
 
     }
@@ -46,9 +48,22 @@ public class UsuarioController {
         return ResponseEntity.ok().build();
 
     }
+
     @PutMapping
     public ResponseEntity<UsuarioDto> atualizaadosUsuarios(@RequestBody UsuarioDto dto,
                                                            @RequestHeader("Authorization")String token){
         return ResponseEntity.ok(usuarioService.atualizaDadosUsuario(token, dto));
+    }
+
+    @PutMapping("/endereco")
+    public ResponseEntity<EnderecoDto> atualizarEndereco(@RequestBody EnderecoDto dto,
+                                                         @RequestParam("id")Long id){
+        return ResponseEntity.ok(usuarioService.atualizaEndereco(id, dto));
+    }
+
+    @PutMapping("/telefone")
+    public ResponseEntity<TelefoneDto> atualizarTelefone(@RequestBody TelefoneDto dto,
+                                                         @RequestParam("id")Long id){
+        return ResponseEntity.ok(usuarioService.atualizaTelefone(id, dto));
     }
 }

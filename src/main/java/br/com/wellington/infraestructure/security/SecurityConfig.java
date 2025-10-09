@@ -54,6 +54,7 @@ public class SecurityConfig {
         // Retorna a configuração do filtro de segurança construída
         return http.build();
     }
+
     // Configura o PasswordEncoder para criptografar senhas usando BCrypt
     @Bean
     public PasswordEncoder passwordEncoder() {
