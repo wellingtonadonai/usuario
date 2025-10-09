@@ -48,16 +48,19 @@ public class UsuarioController {
         return ResponseEntity.ok().build();
 
     }
+
     @PutMapping
     public ResponseEntity<UsuarioDto> atualizaadosUsuarios(@RequestBody UsuarioDto dto,
                                                            @RequestHeader("Authorization")String token){
         return ResponseEntity.ok(usuarioService.atualizaDadosUsuario(token, dto));
     }
+
     @PutMapping("/endereco")
     public ResponseEntity<EnderecoDto> atualizarEndereco(@RequestBody EnderecoDto dto,
                                                          @RequestParam("id")Long id){
         return ResponseEntity.ok(usuarioService.atualizaEndereco(id, dto));
     }
+
     @PutMapping("/telefone")
     public ResponseEntity<TelefoneDto> atualizarTelefone(@RequestBody TelefoneDto dto,
                                                          @RequestParam("id")Long id){
