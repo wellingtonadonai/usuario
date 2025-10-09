@@ -12,6 +12,8 @@ import java.util.List;
 
 @Component
 public class UsuarioConverter {
+
+
     public Usuario paraUsuario(UsuarioDto usuarioDto){
 
         return Usuario.builder()
@@ -29,6 +31,7 @@ public class UsuarioConverter {
                 .rua(enderecoDto.getRua())
                 .numero(enderecoDto.getNumero())
                 .cidade(enderecoDto.getCidade())
+                .cep(enderecoDto.getCep())
                 .complemento(enderecoDto.getComplemento())
                 .estado(enderecoDto.getEstado())
                 .build();
@@ -63,15 +66,18 @@ public class UsuarioConverter {
 
     public EnderecoDto paraEnderecoDto(Endereco endereco){
         return EnderecoDto.builder()
+                .id(endereco.getId())
                 .rua(endereco.getRua())
                 .numero(endereco.getNumero())
                 .cidade(endereco.getCidade())
+                .cep(endereco.getCep())
                 .complemento(endereco.getComplemento())
                 .estado(endereco.getEstado())
                 .build();
     }
     public TelefoneDto paraTelefoneDto(Telefone telefone){
         return TelefoneDto.builder()
+                .id(telefone.getId())
                 .numero(telefone.getNumero())
                 .ddd(telefone.getDdd())
                 .build();
@@ -90,6 +96,24 @@ public class UsuarioConverter {
                 .email(usuarioDto.getEmail() != null ? usuarioDto.getEmail() : entity.getEmail())
                 .enderecos(entity.getEnderecos())
                 .telefones(entity.getTelefones())
+                .build();
+    }
+    public Endereco updateEndereco(EnderecoDto dto, Endereco entity) {
+        return Endereco.builder()
+                .id(entity.getId())
+                .rua(dto.getRua() != null ? dto.getRua() : entity.getRua())
+                .numero(dto.getNumero() != null ? dto.getNumero() : entity.getNumero())
+                .cidade(dto.getCidade() != null ? dto.getCidade() : entity.getCidade())
+                .cep(dto.getCep() != null ? dto.getCep() : entity.getCep())
+                .complemento(dto.getComplemento() != null ? dto.getComplemento() : entity.getComplemento())
+                .estado(dto.getEstado() != null ? dto.getEstado() : entity.getEstado())
+                .build();
+    }
+    public Telefone updateTelefone(TelefoneDto dto, Telefone entity){
+        return Telefone.builder()
+                .id(entity.getId())
+                .ddd(dto.getDdd() != null ? dto.getDdd() : entity.getDdd())
+                .numero(dto.getNumero() != null ? dto.getNumero() : entity.getNumero())
                 .build();
     }
 
