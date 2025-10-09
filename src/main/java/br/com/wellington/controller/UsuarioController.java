@@ -23,12 +23,13 @@ public class UsuarioController {
     private final JwtUtil jwtUtil;
 
     @PostMapping
-    public ResponseEntity <UsuarioDto> salvarUsuario(@RequestBody UsuarioDto usuarioDto){
+    public ResponseEntity<UsuarioDto> salvarUsuario(@RequestBody UsuarioDto usuarioDto) {
         return ResponseEntity.ok(usuarioService.salvarUsuario(usuarioDto));
 
     }
+
     @PostMapping("/login")
-    public String login(@RequestBody UsuarioDto usuarioDto){
+    public String login(@RequestBody UsuarioDto usuarioDto) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(usuarioDto.getEmail(),
                         usuarioDto.getSenha())
@@ -36,13 +37,15 @@ public class UsuarioController {
         return "Bearer " + jwtUtil.generateToken(authentication.getName());
 
     }
+
     @GetMapping
-    public ResponseEntity<UsuarioDto> buscaUsuarioPorEmail(@RequestParam("email")String email){
-        return ResponseEntity.ok( usuarioService.buscaUsuarioPorEmail(email));
+    public ResponseEntity<UsuarioDto> buscaUsuarioPorEmail(@RequestParam("email") String email) {
+        return ResponseEntity.ok(usuarioService.buscaUsuarioPorEmail(email));
 
     }
+
     @DeleteMapping("/{email}")
-    public ResponseEntity<Void> deletarUsuarioEmail(@PathVariable String email){
+    public ResponseEntity<Void> deletarUsuarioEmail(@PathVariable String email) {
         usuarioService.deletaUsuarioPorEmail(email);
 
         return ResponseEntity.ok().build();
@@ -51,19 +54,31 @@ public class UsuarioController {
 
     @PutMapping
     public ResponseEntity<UsuarioDto> atualizaadosUsuarios(@RequestBody UsuarioDto dto,
-                                                           @RequestHeader("Authorization")String token){
+                                                           @RequestHeader("Authorization") String token) {
         return ResponseEntity.ok(usuarioService.atualizaDadosUsuario(token, dto));
     }
 
     @PutMapping("/endereco")
     public ResponseEntity<EnderecoDto> atualizarEndereco(@RequestBody EnderecoDto dto,
-                                                         @RequestParam("id")Long id){
+                                                         @RequestParam("id") Long id) {
         return ResponseEntity.ok(usuarioService.atualizaEndereco(id, dto));
     }
 
     @PutMapping("/telefone")
     public ResponseEntity<TelefoneDto> atualizarTelefone(@RequestBody TelefoneDto dto,
-                                                         @RequestParam("id")Long id){
+                                                         @RequestParam("id") Long id) {
         return ResponseEntity.ok(usuarioService.atualizaTelefone(id, dto));
+    }
+
+    @PostMapping("/enderecos")
+    public ResponseEntity<EnderecoDto> cadastrarNovoEndereco(@RequestBody EnderecoDto dto,
+                                                             @RequestHeader("Authorization") String token) {
+        return ResponseEntity.ok(usuarioService.cadastroEndereco(token, dto));
+    }
+
+    @PostMapping("/telefone")
+    public ResponseEntity<TelefoneDto> cadastrarNovoTelefone(@RequestBody TelefoneDto dto,
+                                                             @RequestHeader("Authorization") String token) {
+        return ResponseEntity.ok(usuarioService.cadastroTelefone(token, dto));
     }
 }
